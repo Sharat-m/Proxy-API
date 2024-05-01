@@ -10,6 +10,6 @@ const router = express.Router();
 // Use routes in the Express app
 router.use('/api', geoRoutes);
 router.use('/api/culture', localesRoutes);
-router.use('/api/v1/culture', currenciesRoutes)
+router.use('/api/culture', currenciesRoutes)
 
 module.exports = router;
