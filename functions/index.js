@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 var fs = require("fs");
-const geoData = require("./geo-data.json");
+const geoData = require("./src/data/geo-data.json");
 
 //Main App
 const app = express();
