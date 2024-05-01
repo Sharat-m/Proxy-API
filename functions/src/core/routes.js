@@ -2,14 +2,14 @@ const express = require('express');
 
 // Importing the route from geo.js
 const geoRoutes = require('../api/culture/geo');
-const locales = require('../api/culture/locales');
+const localesRoutes = require('../api/culture/locales');
+const currenciesRoutes = require('../api/culture/currencies')
 
 const router = express.Router();
 
 // Use routes in the Express app
 router.use('/api', geoRoutes);
-router.use('/api/culture', locales);
-
-
+router.use('/api/culture', localesRoutes);
+router.use('/api/v1/culture', currenciesRoutes)
 
 module.exports = router;
