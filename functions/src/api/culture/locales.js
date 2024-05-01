@@ -1,11 +1,11 @@
 const express = require("express");
-const geoData = require("../../data/geo-data.json"); // Proper path to your JSON data
+const localesData = require("../../data/locales.json"); // Proper path to your JSON data
 
-const geoRouter = express.Router();
+const localesRouter = express.Router();
 // Route to get geographic data
-geoRouter.get("/geo/hierarchy/flights/locale", (req, res) => {
+localesRouter.get("/locales", (req, res) => {
   try {
-    res.status(200).send(geoData);
+    res.status(200).send(localesData);
   } catch (error) {
     console.error(error); // Good practice to log the error
     res.status(500).send({
@@ -15,4 +15,4 @@ geoRouter.get("/geo/hierarchy/flights/locale", (req, res) => {
   }
 });
 
-module.exports = geoRouter;
+module.exports = localesRouter;
