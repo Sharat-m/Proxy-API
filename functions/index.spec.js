@@ -1,8 +1,9 @@
 const express = require("express");
+const fs = require("fs");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-var fs = require("fs");
 const geoData = require("./src/data/geo-data.json");
+
 
 //Main App
 const app = express();
@@ -159,9 +160,6 @@ app.delete("/api/delete/:id", async (req, res) => {
 
 
 
-
-
-
 //############################################################ Skyscanner Replica APIs ######################################################################################
 // Skyscanner replica routes
 app.get("/flights", (req, res) => {
@@ -234,8 +232,8 @@ app.post("/flight-results", async (req, res) => {
     return;
   }
   //type:oneway and twoway
-  const oneWay = fsReadFileSynchToArray("./onewaydetails.json");
-  const twoWay = fsReadFileSynchToArray("./twowaydetails.json");
+  const oneWay = fsReadFileSynchToArray("./src/data/onewaydetails.json");
+  const twoWay = fsReadFileSynchToArray("./src/data/twoWayDetails.json");
   const trip_type = requestData.trip_type;
   if (trip_type === "one-way") {
     const onewayResult = {
