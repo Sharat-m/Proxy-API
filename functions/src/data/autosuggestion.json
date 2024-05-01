@@ -1,0 +1,22 @@
+{
+    "places": [
+        {
+            "entityId": "128667539",
+            "iataCode": "VVI",
+            "parentId": "27547083",
+            "name": "Santa Cruz Viru Viru",
+            "countryId": "BO",
+            "countryName": "Bolivia",
+            "cityName": "Santa Cruz",
+            "location": "-17.64476,-63.13536",
+            "hierarchy": "Santa Cruz Viru Viru (VVI), Santa Cruz|Santa Cruz Department|Bolivia",
+            "type": "PLACE_TYPE_AIRPORT",
+            "highlighting": [
+                [
+                    22,
+                    25
+                ]
+            ]
+        }
+    ]
+}
