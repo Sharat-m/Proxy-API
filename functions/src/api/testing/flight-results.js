@@ -1,11 +1,12 @@
 const express = require("express");
-const fs = require("fs");
+const fs = require ("fs");
 
 const flightResultRouter = express.Router();
 
 //Fetching flight results
-flightResultRouter.post("/flight-results", async (req, res) => {
+flightResultRouter.post("/flight-results", async (req , res) => {
     const requestData = req.body;
+
     const todayMidnight = new Date(
       new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
     );
@@ -57,7 +58,7 @@ flightResultRouter.post("/flight-results", async (req, res) => {
     }
     //type:oneway and twoway
     const oneWay = fsReadFileSynchToArray("./src/data/onewaydetails.json");
-    const twoWay = fsReadFileSynchToArray("./src/data/twoWayDetails.json");
+    const twoWay = fsReadFileSynchToArray("./src/data/twowaydetails.json");
     const trip_type = requestData.trip_type;
     if (trip_type === "one-way") {
       const onewayResult = {
