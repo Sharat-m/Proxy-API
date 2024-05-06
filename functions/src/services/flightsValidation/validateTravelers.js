@@ -2,14 +2,14 @@ function validateTravelers(query) {
   //####################### TRAVELLERS ###################################
 
   var adults = query.adults;
-//   console.log("adults:", adults);
+  //   console.log("adults:", adults);
   var childrens = query.childrenAges;
   var childrenAges = query.childrenAges;
-//   console.log("childrenAges:", childrenAges);
+  //   console.log("childrenAges:", childrenAges);
   let totalChildren = childrenAges.length;
-//   console.log("totalChildren:", totalChildren);
+  //   console.log("totalChildren:", totalChildren);
   var totalTravelers = adults + totalChildren;
-//   console.log("totalTravelers :", totalTravelers);
+  //   console.log("totalTravelers :", totalTravelers);
   // const infants = query.childrenAges.filter((age) => age === 1);
 
   // console.log("childrenAge:",childrenAge);
