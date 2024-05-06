@@ -1,6 +1,5 @@
 function validateTravelers(query) {
-   
-  //####################### TRAVELLERS ###################################
+     //####################### TRAVELLERS ###################################
 
   var adults = query.adults;
   // console.log("adults:", adults);
@@ -21,9 +20,9 @@ function validateTravelers(query) {
 
 
 
-   
+
   // when both adult and totalchildren is more than 8
-  if ((adults >= 1 && adults <= 8) && !(totalChildren <= 8 )) {
+  if (!(adults >= 1 && adults <= 8) && !(totalChildren <= 8 )) {
     return {
       code: 3,
       message: "The number of adults must be between 1 and 8\nThe maximum number of children is 8",
@@ -33,7 +32,7 @@ function validateTravelers(query) {
   }
 
   //when only adults is 0 and more than 8
-  if (adults >= 1 && adults <= 8) {
+  if (!(adults >= 1 && adults <= 8)) {
     return {
       code: 3,
       message: "The number of adults must be between 1 and 8",
@@ -43,7 +42,7 @@ function validateTravelers(query) {
   }
 
   //when only totalchildren is more than 8
-  if ((totalChildren <= 8)) {
+  if (!(totalChildren <= 8)) {
    return {
       code: 3,
       message: "The maximum number of children is 8",
@@ -66,7 +65,7 @@ const totalInfant = childrenAges.filter(age => age==1);
 let totalInfants = totalInfant.length ;
 // console.log("totalInfants : ", totalInfants);
 
-if ((adults >= totalInfants)) {
+if (!(adults >= totalInfants)) {
     return {
       code: 13,
       message: "No successful responses were found for the request-Each infant must be accompanied by at least one adult",
@@ -81,13 +80,14 @@ let totalchilds = totalchild.length ;
 let totalAdultChild = totalchilds + adults ;
 console.log("totalAdultChild :", totalAdultChild);
 
-if ((totalAdultChild <= 9)) {
+if (!(totalAdultChild <= 9)) {
   return {
     code: 3,
     message: "RESULT_STATUS_COMPLETE - Total adult and child should be below 10",
     details: [],
   }
 }
+
 return { error: false }; // indicating no error
 }
 
