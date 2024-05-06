@@ -4,8 +4,10 @@ function validateTravelers(query) {
   var adults = query.adults;
   //   console.log("adults:", adults);
   var childrens = query.childrenAges;
-  var childrenAges = query.childrenAges;
+  // var childrenAges = query.childrenAges;
   //   console.log("childrenAges:", childrenAges);
+  const childrenAges = Array.isArray(query.childrenAges) ? query.childrenAges : []
+  console.log("childrenAges :", childrenAges);
   let totalChildren = childrenAges.length;
   //   console.log("totalChildren:", totalChildren);
   var totalTravelers = adults + totalChildren;
@@ -18,46 +20,74 @@ function validateTravelers(query) {
   //   `There are ${infants.length} infants and ${children.length} children.`
   // );
 
-  // when both adult and totalchildren is more than 8
-  if (!(adults >= 1 && adults <= 8) && !(totalChildren <= 8)) {
+  //when the adult is more than 8 and the children age is more than 15 and number of children
+  const hasInvalidAge = childrenAges.some((age) => age > 15);
+  if (!(adults >= 1 && adults <= 8) && !(totalChildren <= 8) && hasInvalidAge) {
     return {
-      error: true,
       code: 3,
+      error: true,
       message:
-        "The number of adults must be between 1 and 8\nThe maximum number of children is 8",
-      details: [],
+        "The number of adults must be between 1 and 8\nThe maximum number of children is 8\nThe children ages must be between 0 and 15",
     };
   }
 
+  // when both adult and totalchildren is more than 8
+  if (!(adults >= 1 && adults <= 8) && !(totalChildren <= 8)) {
+    return {
+      code: 3,
+      error: true,
+      message:
+        "The number of adults must be between 1 and 8\nThe maximum number of children is 8",
+    };
+  }
+
+  // when the adult is more than 8 and the children age is more than 15
+  if (!(adults >= 1 && adults <= 8) && hasInvalidAge) {
+    return {
+      code: 3,
+      error: true,
+      message:
+        "The number of adults must be between 1 and 8\nThe children ages must be between 0 and 15",
+    };
+  }
+
+  // when the children is more than 8 and age is more than 15
+  if (!(totalChildren <= 8) && hasInvalidAge) {
+    return {
+      code: 3,
+      error: true,
+      message:
+        "The maximum number of children is 8\nThe children ages must be between 0 and 15",
+    };
+  }
+
+
   //when only adults is 0 and more than 8
   if (!(adults >= 1 && adults <= 8)) {
-    console.log("Validation failed for adults");
+    // console.log("Validation failed for adults");
     return {
-      error: true,
       code: 3,
+      error: true,
       message: "The number of adults must be between 1 and 8",
-      details: [],
     };
   }
 
   //   //when only totalchildren is more than 8
   if (!(totalChildren <= 8)) {
     return {
-      error: true,
       code: 3,
+      error: true,
       message: "The maximum number of children is 8",
-      details: [],
     };
   }
 
   // when the age of children is more than 15
-  const hasInvalidAge = childrenAges.some((age) => age > 15);
+  // const hasInvalidAge = childrenAges.some((age) => age > 15);
   if (hasInvalidAge) {
     return {
-      error: true,
       code: 3,
+      error: true,
       message: "The children ages must be between 0 and 15",
-      details: [],
     };
   }
 
@@ -68,11 +98,9 @@ function validateTravelers(query) {
 
   if (!(adults >= totalInfants)) {
     return {
-      error: true,
       code: 13,
-      message:
-        "No successful responses were found for the request-Each infant must be accompanied by at least one adult",
-      details: [],
+      error: true,
+      message: "No successful responses were found for the request",
     };
   }
 
@@ -82,14 +110,12 @@ function validateTravelers(query) {
   // console.log("totalchilds : ", totalchilds);
   let totalAdultChild = totalchilds + adults;
   // console.log("totalAdultChild :", totalAdultChild);
-
+  // Total adult and child should be below 10
   if (!(totalAdultChild <= 9)) {
     return {
-      error: true,
       code: 3,
-      message:
-        "RESULT_STATUS_COMPLETE - Total adult and child should be below 10",
-      details: [],
+      error: true,
+      message: "RESULT_STATUS_COMPLETE",
     };
   }
 

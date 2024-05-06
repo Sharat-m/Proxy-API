@@ -16,7 +16,7 @@ function validateDate(queryLegs) {
     return {
       error: true,
       code: 1,
-      message: "Date data is missing in the first query leg",
+      message: "The query leg list contains an invalid or null date",
     };
   }
 
@@ -32,7 +32,7 @@ function validateDate(queryLegs) {
     return {
       error: true,
       code: 1,
-      message: "Incomplete date data in the first query leg",
+      message: "The query leg list contains an invalid or null date",
     };
   }
   //############ DATE VALIDATION ####################
@@ -59,7 +59,7 @@ function validateDate(queryLegs) {
     return {
       error: true,
       code: 3,
-      message: "Return date is missing or invalid",
+      message: "The query leg list contains an invalid or null date",
     };
   }
 

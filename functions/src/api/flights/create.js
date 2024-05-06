@@ -19,55 +19,53 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
     !query.queryLegs ||
     query.queryLegs.length === 0 ||
     !query.queryLegs[0].originPlaceId ||
-    !query.queryLegs[0].destinationPlaceId ||
-    !query.adults ||
-    !query.childrenAges
+    !query.queryLegs[0].destinationPlaceId 
   ) {
     return res
       .status(400)
-      .json({ status: "Failed", message: "Invalid request data" });
+      .json({ code:  3, message: "Invalid request data" });
   }
 
   const marketValidation = validateMarket(query);
   if (marketValidation.error) {
     return res
       .status(400)
-      .json({ status: "Failed", message: marketValidation.message });
+      .json({ code: marketValidation.code, message: marketValidation.message, "details": [] });
   }
 
   const localeValidation = validateLocale(query);
   if (localeValidation.error) {
     return res
       .status(400)
-      .json({ status: "Failed", message: localeValidation.message });
+      .json({ code: localeValidation.code, message: localeValidation.message, "details": [] });
   }
 
   const currencyValidation = validateCurrency(query);
   if (currencyValidation.error) {
     return res
       .status(400)
-      .json({ status: "Failed", message: currencyValidation.message });
+      .json({ code:  currencyValidation.code, message: currencyValidation.message, "details": [] });
   }
 
   const dateValidation = validateDate(query.queryLegs);
   if (dateValidation.error) {
     return res
       .status(400)
-      .json({ ststus: "Failed", message: dateValidation.message });
+      .json({ code: dateValidation.code, message: dateValidation.message, "details": [] });
   }
 
   const travelersValidation = validateTravelers(query);
   if (travelersValidation.error) {
     return res
       .status(400)
-      .json({ status: "Failed", message: travelersValidation.message });
+      .json({ code: travelersValidation.code, message: travelersValidation.message, "details": [] });
   }
 
   const cabinValidation = validateCabin(query);
   if (cabinValidation.error) {
     return res
       .status(400)
-      .json({ status: "Failed", message: cabinValidation.message });
+      .json({ code: cabinValidation.code, message: cabinValidation.message, "details": [] });
   }
 
   try {
