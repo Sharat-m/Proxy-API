@@ -1,54 +1,59 @@
+const iataData = require("../../data/geo-data.json").places;
 
-const iataData = require ("../../data/geo-data.json").places;
+const iataCodes = Object.values(iataData).map((place) => place.iata);
 
-const iataCodes = Object.values(iataData).map(place => place.iata);
-// console.log("iataCodes:", iataCodes);
 //############ IATA ####################
 function validateIata(queryLegs) {
-//   const iataCode = query.market;
-//   console.log("iataCode:", iataCode);
-// console.log("queryLegs:", queryLegs);
+  // console.log("queryLegs:", queryLegs);
 
-for (const leg of queryLegs){
- let  originPlaceId = leg.originPlaceId.iata
- let destinationPlaceId = leg.destinationPlaceId.iata
+  for (const leg of queryLegs) {
+    // let originPlaceId = leg.originPlaceId.iata;
+    // let destinationPlaceId = leg.destinationPlaceId.iata;
 
-console.log("originPlaceId :", originPlaceId);
-console.log("destinationPlaceId:" , destinationPlaceId);
+    //   // console.log("originPlaceId :", originPlaceId);
+    //   // console.log("destinationPlaceId:", destinationPlaceId);
+    //   const originIsValid = iataCodes.includes(originPlaceId);
+    //   const destinationIsValid = iataCodes.includes(destinationPlaceId);
+    //   // console.log("Origin Place ID valid:", originIsValid);
+    //   // console.log("Destination Place ID valid:", destinationIsValid);
 
-const originIsValid = iataCodes.includes(originPlaceId);
-const destinationIsValid = iataCodes.includes(destinationPlaceId);
+    const originPlaceId = leg.originPlaceId && leg.originPlaceId.iata;
+    const destinationPlaceId = leg.destinationPlaceId && leg.destinationPlaceId.iata;
+    // Check if any IATA code is null or undefined
+    if (!originPlaceId || !destinationPlaceId) {
+      return {
+        error: true,
+        code: 3,
+        message: "The QueryPlace ID cannot be null-iata",
+      };
+    }
 
-console.log("Origin Place ID valid:", originIsValid);
-console.log("Destination Place ID valid:", destinationIsValid);
+    // Check if IATA codes are valid
+    const originIsValid = iataCodes.includes(originPlaceId);
+    const destinationIsValid = iataCodes.includes(destinationPlaceId);
 
-if (originPlaceId == null) {
-    return { error: true, code: 3, message: "The QueryPlace ID cannot be null" };
+    if (!originIsValid || !destinationIsValid) {
+      return {
+        error: true,
+        code: 3,
+        message: "The QueryPlace ID is not valid IATA",
+      };
+    }
+
+    //checking the both iata codes are same or not
+    let originPlace = leg.originPlaceId.iata;
+    let destinationPlace = leg.destinationPlaceId.iata;
+    if (originPlace === destinationPlace) {
+      return {
+        error: true,
+        code: 3,
+        message: "RESULT_STATUS_COMPLETE",
+        action: "RESULT_ACTION_OMITTED",
+      };
+    }
   }
-if (!originPlaceId) {
-    return { error: true, code: 3, message: "The QueryPlace ID is not valid IATA" };
-  }
-
-
-  if (destinationPlaceId == null) {
-    return { error: true, code: 3, message: "The QueryPlace ID cannot be null" };
-  }
-
-  if (!destinationPlaceId) {
-    return { error: true, code: 3, message: "The QueryPlace ID is not valid IATA" };
-  }
-  
-  if (!(originIsValid && destinationIsValid)) {
-    return { error: true, code: 3, message: "The QueryPlace ID is not valid IATA" };
- }
-
-
-}
-
-
- 
-
   return { error: false }; //Indicates the iata is valid
+
 }
 
 module.exports = validateIata;

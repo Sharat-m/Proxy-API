@@ -4,75 +4,119 @@ const {
   validateMarket,
   validateLocale,
   validateCurrency,
-validateIata,
+  validateIata,
+  validateEntity,
   validateDate,
   validateCabin,
   validateTravelers,
 } = require("../../services/flightsValidation");
+ 
+const validateQueryLegs = require('../../services/flightsValidation/validateQueryLegs');
 
 const createRouter = express.Router();
 
 createRouter.post("/flights/live/search/create", async (req, res) => {
   const { query } = req.body;
 
-  if (
-    !query ||
-    !query.queryLegs ||
-    query.queryLegs.length === 0 ||
-    !query.queryLegs[0].originPlaceId ||
-    !query.queryLegs[0].destinationPlaceId 
-  ) {
-    return res
-      .status(400)
-      .json({ code:  3, message: "Invalid request data" });
+  if (!query || !query.queryLegs || query.queryLegs.length === 0) {
+    return res.status(400).json({ code: 3, message: "Invalid request data" });
   }
 
   const marketValidation = validateMarket(query);
   if (marketValidation.error) {
     return res
       .status(400)
-      .json({ code: marketValidation.code, message: marketValidation.message, "details": [] });
+      .json({
+        code: marketValidation.code,
+        message: marketValidation.message,
+        details: [],
+      });
   }
 
   const localeValidation = validateLocale(query);
   if (localeValidation.error) {
     return res
       .status(400)
-      .json({ code: localeValidation.code, message: localeValidation.message, "details": [] });
+      .json({
+        code: localeValidation.code,
+        message: localeValidation.message,
+        details: [],
+      });
   }
 
   const currencyValidation = validateCurrency(query);
   if (currencyValidation.error) {
     return res
       .status(400)
-      .json({ code:  currencyValidation.code, message: currencyValidation.message, "details": [] });
+      .json({
+        code: currencyValidation.code,
+        message: currencyValidation.message,
+        details: [],
+      });
   }
+  // const entityValidation = validateEntity(query.queryLegs);
+  // if (entityValidation.error) {
+  //   return res
+  //     .status(400)
+  //     .json({
+  //       code: entityValidation.code,
+  //       message: entityValidation.message,
+  //       details: [],
+  //     });
+  // }
 
-  const iataValidation = validateIata(query.queryLegs);
-  if(iataValidation.error)
-    {
-      return res.status(400).json( { code: iataValidation.code, message: iataValidation.message, "details": [] })
-    }
+  // const iataValidation = validateIata(query.queryLegs);
+  // if (iataValidation.error) {
+  //   return res
+  //     .status(400)
+  //     .json({
+  //       code: iataValidation.code,
+  //       message: iataValidation.message,
+  //       details: [],
+  //     });
+  // }
+
+const validationResult = validateQueryLegs(query.queryLegs);
+if (validationResult.error) {
+    return res.status(400).json({
+        code: validationResult.code,
+        message: validationResult.message,
+        details: [],
+    });
+}
+
 
   const dateValidation = validateDate(query.queryLegs);
   if (dateValidation.error) {
     return res
       .status(400)
-      .json({ code: dateValidation.code, message: dateValidation.message, "details": [] });
+      .json({
+        code: dateValidation.code,
+        message: dateValidation.message,
+        details: [],
+      });
   }
 
   const travelersValidation = validateTravelers(query);
   if (travelersValidation.error) {
     return res
       .status(400)
-      .json({ code: travelersValidation.code, message: travelersValidation.message, "details": [] });
+      .json({
+        code: travelersValidation.code,
+        message: travelersValidation.message,
+        details: [],
+      });
   }
 
   const cabinValidation = validateCabin(query);
   if (cabinValidation.error) {
     return res
       .status(400)
-      .json({ code: cabinValidation.code, message: cabinValidation.message, "details": [] });
+      .json({
+        code: cabinValidation.code,
+        message: cabinValidation.message,
+        details: [],
+      });
   }
 
   try {
