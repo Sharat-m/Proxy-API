@@ -1,7 +1,7 @@
 const entityData = require("../../data/geo-data.json").places;
 
 const entityCodes = Object.values(entityData).map((place) => place.entityId);
-console.log(entityCodes);
+// console.log(entityCodes);
 //############ IATA ####################
 function validateEntity(queryLegs) {
   // console.log("queryLegs:", queryLegs);
@@ -35,11 +35,11 @@ function validateEntity(queryLegs) {
     const originEntityIsValid = entityCodes
       .map((code) => code.toLowerCase())
       .includes(originEnityId.toLowerCase());
-    console.log("originEntityIsValid:", originEntityIsValid);
+    // console.log("originEntityIsValid:", originEntityIsValid);
     const destinationEntityIsValid = entityCodes
       .map((code) => code.toLowerCase())
       .includes(destinationEntityId.toLowerCase());
-    console.log("destinationEntityIsValid:", destinationEntityIsValid);
+    // console.log("destinationEntityIsValid:", destinationEntityIsValid);
 
     if (!originEntityIsValid || !destinationEntityIsValid) {
       return {
@@ -51,9 +51,9 @@ function validateEntity(queryLegs) {
 
     //checking the both iata codes are same or not
     let originPlace = leg.originPlaceId.entityId;
-    console.log(originPlace);
+    // console.log(originPlace);
     let destinationPlace = leg.destinationPlaceId.entityId;
-    console.log(destinationPlace);
+    // console.log(destinationPlace);
     if (originPlace == destinationPlace) {
       return {
         error: true,

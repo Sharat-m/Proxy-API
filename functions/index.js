@@ -20,7 +20,7 @@ const logger = require("firebase-functions/logger");
 // https://firebase.google.com/docs/functions/get-started
 
 
-// Export the app to Firebase Cloud Functions
+// Export the app to Firebase Cloud Functions 
 exports.app = onRequest(app);
 
 
