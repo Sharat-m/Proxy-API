@@ -4,8 +4,9 @@ const {
   validateMarket,
   validateLocale,
   validateCurrency,
-  validateCabin,
+validateIata,
   validateDate,
+  validateCabin,
   validateTravelers,
 } = require("../../services/flightsValidation");
 
@@ -46,6 +47,12 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
       .status(400)
       .json({ code:  currencyValidation.code, message: currencyValidation.message, "details": [] });
   }
+
+  const iataValidation = validateIata(query.queryLegs);
+  if(iataValidation.error)
+    {
+      return res.status(400).json( { code: iataValidation.code, message: iataValidation.message, "details": [] })
+    }
 
   const dateValidation = validateDate(query.queryLegs);
   if (dateValidation.error) {

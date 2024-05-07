@@ -7,7 +7,7 @@ function validateTravelers(query) {
   // var childrenAges = query.childrenAges;
   //   console.log("childrenAges:", childrenAges);
   const childrenAges = Array.isArray(query.childrenAges) ? query.childrenAges : []
-  console.log("childrenAges :", childrenAges);
+  // console.log("childrenAges :", childrenAges);
   let totalChildren = childrenAges.length;
   //   console.log("totalChildren:", totalChildren);
   var totalTravelers = adults + totalChildren;
