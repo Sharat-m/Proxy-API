@@ -6,20 +6,25 @@ const {
   validateCurrency,
   validateIata,
   validateEntity,
+  validateQueryLegs,
   validateDate,
   validateCabin,
   validateTravelers,
 } = require("../../services/flightsValidation");
  
-const validateQueryLegs = require('../../services/flightsValidation/validateQueryLegs');
 
 const createRouter = express.Router();
 
 createRouter.post("/flights/live/search/create", async (req, res) => {
   const { query } = req.body;
 
-  if (!query || !query.queryLegs || query.queryLegs.length === 0) {
-    return res.status(400).json({ code: 3, message: "Invalid request data" });
+  if (!query) {
+    return res.status(400).json({ code: 3, message: "The currency is missing\nThe locale is missing\nThe market is missing\nThe query leg list must contain at least 1 leg\nThe number of adults must be between 1 and 8\nThe cabin class is invalid",  "details": [] });
+  }
+
+
+  if ( !query.queryLegs || query.queryLegs.length === 0) {
+    return res.status(400).json({ code: 3, message: "The query leg list must contain at least 1 leg" , "details": []});
   }
 
   const marketValidation = validateMarket(query);
