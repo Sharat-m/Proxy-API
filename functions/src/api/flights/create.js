@@ -1,11 +1,13 @@
 const express = require("express");
+const crypto = require('crypto');
+const { db } = require('../../config/admin')
 const fs = require("fs");
 const {
   validateMarket,
   validateLocale,
   validateCurrency,
   validateIata,
-  validateEntity,
+  validateEntity, 
   validateQueryLegs,
   validateDate,
   validateCabin,
@@ -15,8 +17,22 @@ const {
 
 const createRouter = express.Router();
 
+
 createRouter.post("/flights/live/search/create", async (req, res) => {
   const { query } = req.body;
+console.log("query:", query);
+console.log("market:", query.market );
+console.log("locale:", query.locale);
+console.log("currency:", query.currency);
+
+
+
+
+
+
+
+
+
 
   if (!query) {
     return res.status(400).json({ code: 3, message: "The currency is missing\nThe locale is missing\nThe market is missing\nThe query leg list must contain at least 1 leg\nThe number of adults must be between 1 and 8\nThe cabin class is invalid",  "details": [] });
@@ -123,6 +139,47 @@ if (validationResult.error) {
         details: [],
       });
   }
+
+  
+//Genearting the random session token
+  function generateSessionToken() {
+      // Generate a random 48-byte binary buffer
+      const buffer = crypto.randomBytes(20);
+      // Convert the binary data to a base64 encoded string
+      const token = buffer.toString('base64');
+      // Replace any '+' and '/' characters to make the string URL-safe
+      return token.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  
+  const sessionToken = generateSessionToken();
+  console.log('Session Token:', sessionToken);
+  
+
+  try {
+    const uniqueId = Date.now().toString();
+    console.log('uniqueId:',uniqueId); //1714476314120
+    await db.collection("flight_details").doc(uniqueId).create({
+      id: uniqueId,
+      token : sessionToken ,
+      market: query.market,
+      locale: query.locale,
+      currency: query.currency,
+    });
+    return res.status(200).send({
+      id: uniqueId ,
+      sessionToken : sessionToken,
+      status: "RESULT_STATUS_INCOMPLETE",
+      action: "RESULT_ACTION_REPLACED",
+    });
+  }
+   catch (error) {
+    // console.log(error);
+    return res.status(500).send({
+      status: "Error",
+      msg: "Failed to read data",
+    });
+  }
+
 
   try {
     // const resultJson = await readDataFromFile("./src/data/create.json");

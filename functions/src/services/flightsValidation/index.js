@@ -6,7 +6,7 @@ const validateDate = require("./validateDate");
 const validateCabin = require("./validateCabin");
 const validateTravelers = require("./validateTravelers");
 const validateEntity = require("./validateEntity");
-const validateQueryLegs = require ("./validateQueryLegs");
+const validateQueryLegs = require("./validateQueryLegs");
 
 module.exports = {
   validateMarket,
@@ -17,5 +17,5 @@ module.exports = {
   validateQueryLegs,
   validateDate,
   validateCabin,
-  validateTravelers
+  validateTravelers,
 };
