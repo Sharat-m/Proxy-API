@@ -144,29 +144,28 @@ if (validationResult.error) {
 //Genearting the random session token
   function generateSessionToken() {
       // Generate a random 48-byte binary buffer
-      const buffer = crypto.randomBytes(20);
+      const buffer = crypto.randomBytes(30);
       // Convert the binary data to a base64 encoded string
       const token = buffer.toString('base64');
       // Replace any '+' and '/' characters to make the string URL-safe
       return token.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   }
-  
   const sessionToken = generateSessionToken();
-  console.log('Session Token:', sessionToken);
+  // console.log('Session Token:', sessionToken);
   
-
+//connecting firebase firestore databse
   try {
-    const uniqueId = Date.now().toString();
-    console.log('uniqueId:',uniqueId); //1714476314120
-    await db.collection("flight_details").doc(uniqueId).create({
-      id: uniqueId,
+    // const uniqueId = Date.now().toString();
+    // console.log('uniqueId:',uniqueId); //1714476314120
+    await db.collection("flight_details").doc(sessionToken).create({
+      // id: uniqueId,
       token : sessionToken ,
       market: query.market,
       locale: query.locale,
       currency: query.currency,
     });
     return res.status(200).send({
-      id: uniqueId ,
+      // id: uniqueId ,
       sessionToken : sessionToken,
       status: "RESULT_STATUS_INCOMPLETE",
       action: "RESULT_ACTION_REPLACED",
