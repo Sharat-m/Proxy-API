@@ -7,7 +7,9 @@ function validateMarket(query) {
   if (!marketCode) {
     return { error: true, code: 3, message: "The market is missing" };
   }
-
+ if(marketCode == null){
+  return { error:true ,error: true, code: 3, message: "The market is invalid" }
+ }
   //checking the market code present in the market json file
   const marketExist = marketsData.some((market) => market.code === marketCode);
 //   console.log("marketExist:", marketExist); true or false
