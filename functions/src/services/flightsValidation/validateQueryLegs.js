@@ -1,6 +1,6 @@
 // validateQueryLegs.js
-const validateIata = require("../../services/flightsValidation/validIata");
-const validateEntity = require("../../services/flightsValidation/validateEntity");
+const validateIata = require("./validIata");
+const validateEntity = require("./validateEntity");
 
 const iataData = require("../../data/geo-data.json").places;
 const iataCodes = Object.values(iataData).map((place) => place.iata);
@@ -11,25 +11,25 @@ function validateQueryLegs(queryLegs) {
   for (const leg of queryLegs) {
 
     const originPlaceId = leg.originPlaceId;
-    console.log("originPlaceId", originPlaceId); //originPlaceId { iata: 'IXE' }
+    // console.log("originPlaceId", originPlaceId); //originPlaceId { iata: 'IXE' }
     const destinationPlaceId = leg.destinationPlaceId;
-    console.log("destinationPlaceId:", destinationPlaceId); //destinationPlaceId: { entityId: '128668563' }
+    // console.log("destinationPlaceId:", destinationPlaceId); //destinationPlaceId: { entityId: '128668563' }
 
     // Iata code
     const originIata = originPlaceId && originPlaceId.iata;
-    console.log("originIata:", originIata); // IXE
+    // console.log("originIata:", originIata); // IXE
     const destinationIata = destinationPlaceId && destinationPlaceId.iata;
-    console.log("destinationIata:", destinationIata); //undefined
+    // console.log("destinationIata:", destinationIata); //undefined
     // Entity Id
     const originEntityId = originPlaceId && originPlaceId.entityId;
-    console.log("originEntityId: ", originEntityId); //undefined
+    // console.log("originEntityId: ", originEntityId); //undefined
     const destinationEntityId =
       destinationPlaceId && destinationPlaceId.entityId;
-    console.log("destinationEntityId:", destinationEntityId); // 128668563
+    // console.log("destinationEntityId:", destinationEntityId); // 128668563
 
     // Validate origin IATA
     const checkingOriginIata = iataCodes.includes(originIata);
-    console.log("checkingOriginIata:", checkingOriginIata); //true
+    // console.log("checkingOriginIata:", checkingOriginIata); //true
     if (originIata && !checkingOriginIata) {
       return {
         error: true,
@@ -41,7 +41,7 @@ function validateQueryLegs(queryLegs) {
 
     // Validate destination IATA
     const checkingDestinationIata = iataCodes.includes(destinationIata);
-    console.log("checkingDestinationIata:", checkingDestinationIata); //false
+    // console.log("checkingDestinationIata:", checkingDestinationIata); //false
     if (destinationIata && !checkingDestinationIata) {
       return {
         error: true,
@@ -53,7 +53,7 @@ function validateQueryLegs(queryLegs) {
 
     // Validate origin Entity ID
     const checkingOriginEntityId = entityCodes.includes(originEntityId);
-    console.log("checkingOriginEntityId:", checkingOriginEntityId);
+    // console.log("checkingOriginEntityId:", checkingOriginEntityId);
     if (originEntityId && !checkingOriginEntityId) {
       return {
         error: true,
@@ -66,7 +66,7 @@ function validateQueryLegs(queryLegs) {
     // Validate destination Entity ID
     const checkingDestinationEntityId =
       entityCodes.includes(destinationEntityId);
-    console.log("checkingDestinationEntityId:", checkingDestinationEntityId);
+    // console.log("checkingDestinationEntityId:", checkingDestinationEntityId);
     if (destinationEntityId && !checkingDestinationEntityId) {
       return {
         error: true,

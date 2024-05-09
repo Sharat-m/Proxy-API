@@ -3,7 +3,7 @@ const marketsData = require("../../data/markets.json").markets;
 //############ MARKET ####################
 function validateMarket(query) {
   const marketCode = query.market;
-  console.log("marketCode:", marketCode);
+  // console.log("marketCode:", marketCode);
   if (!marketCode) {
     return { error: true, code: 3, message: "The market is missing" };
   }

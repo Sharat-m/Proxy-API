@@ -1,5 +1,5 @@
 const express = require("express");
-const fs = require("fs");
+const { fsReadFileToJSON }  = require('../../utils/fileReader');
 
 const flightRouter = express.Router();
 
@@ -63,8 +63,8 @@ flightRouter.post("/flights/live/search", async (req, res) => {
     return;
   }
   //type:oneway and twoway
-  const oneWay = fsReadFileSynchToArray("./src/data/create.json");
-  const twoWay = fsReadFileSynchToArray("./src/data/create.json");
+  const oneWay = fsReadFileToJSON('./src/data/create.json');
+  const twoWay = fsReadFileToJSON('./src/data/create.json');
   const trip_type = requestData.trip_type;
   if (trip_type === "one-way") {
     const onewayResult = {
@@ -85,13 +85,6 @@ flightRouter.post("/flights/live/search", async (req, res) => {
   }
 });
 
-
-
-//used to read the json file
-function fsReadFileSynchToArray(filePath) {
-  var data = JSON.parse(fs.readFileSync(filePath));
-  return data;
-}
 
 module.exports = flightRouter;
 
