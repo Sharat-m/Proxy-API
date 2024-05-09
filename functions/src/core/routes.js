@@ -20,7 +20,7 @@ const marketsRouter = require("../api/culture/markets");
 const flightRouter = require("../api/flights/flight");
 const createRouter = require("../api/flights/create");
 const pollRouter = require("../api/flights/poll");
-
+const autoRouter = require("../api/flights/autosuggest");
 
 const router = express.Router();
 module.exports = router;
@@ -34,6 +34,7 @@ router.use("/api/culture", marketsRouter);
 router.use("/api", flightRouter);
 router.use("/api", createRouter);
 router.use("/api", pollRouter);
+router.use("/", autoRouter);
 
 
 
