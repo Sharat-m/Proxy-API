@@ -1,15 +1,13 @@
 // validateQueryLegs.js
-const validateIata = require("./validIata");
-const validateEntity = require("./validateEntity");
+const validateIata = require("./validate-iata");
+const validateEntity = require("./validate-entity");
 
 const iataData = require("../../data/geo-data.json").places;
 const iataCodes = Object.values(iataData).map((place) => place.iata);
 const entityCodes = Object.values(iataData).map((place) => place.entityId);
 
 function validateQueryLegs(queryLegs) {
-
   for (const leg of queryLegs) {
-
     const originPlaceId = leg.originPlaceId;
     // console.log("originPlaceId", originPlaceId); //originPlaceId { iata: 'IXE' }
     const destinationPlaceId = leg.destinationPlaceId;

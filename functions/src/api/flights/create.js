@@ -12,7 +12,7 @@ const {
   validateDate,
   validateCabin,
   validateTravelers,
-} = require("../../services/flightsValidation");
+} = require("../../services/flight-search");
 
 const createRouter = express.Router();
 
