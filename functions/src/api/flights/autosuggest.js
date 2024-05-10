@@ -36,14 +36,14 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
     });
   }
 
-  if (!searchTerm) {
-    return res.status(400).json({ error: "Search term is required " });
-  }
+  // if (!searchTerm) {
+  //   return res.status(400).json({ error: "Search term is required " });
+  // }
 
   try {
     const autoJson = require("../../data/autosuggestion.json");
     // console.log("autoJson:" , autoJson);
-    // Filter logic
+    // Filter logic to get the searchterm based on market and country name and name
     const results = autoJson
       .filter(
         (place) =>
@@ -54,6 +54,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
       )
       .slice(0, limit);
     // console.log("Filtered results:", results);
+
     // Highlighting the matching parts in both name and hierarchy
     const response = results.map((place) => {
       let highlighting = [];
@@ -90,7 +91,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
       return { ...place, highlighting };
     });
 
-    // Make sure to limit results if 'limit' is specified in the request
+    //  limit results if 'limit' is specified in the request
     if (req.body.limit) {
       response = response.slice(0, req.body.limit);
     }
