@@ -45,12 +45,14 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
     // console.log("autoJson:" , autoJson);
     // Filter logic to get the searchterm based on market and country name and name
     const results = autoJson
-      .filter(
-        (place) =>
-          market &&
-          place.countryId.toUpperCase() === market.toUpperCase() &&
-          (place.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            place.countryName.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter((place) =>
+        market ? place.countryId.toUpperCase() === market.toUpperCase() : true
+      )
+      .filter((place) =>
+        searchTerm
+          ? place.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            place.countryName.toLowerCase().includes(searchTerm.toLowerCase())
+          : true
       )
       .slice(0, limit);
     // console.log("Filtered results:", results);
@@ -59,42 +61,46 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
     const response = results.map((place) => {
       let highlighting = [];
 
-      // Function to find all occurrences of a searchTerm in a text and push their start and end indices
-      const addHighlightIndices = (text, searchTerm) => {
-        const lowerText = text.toLowerCase();
-        const searchTermLength = searchTerm.length;
-        let startIndex = 0;
-        while (
-          (startIndex = lowerText.indexOf(
-            searchTerm.toLowerCase(),
-            startIndex
-          )) !== -1
-        ) {
-          const newHighlight = [startIndex, startIndex + searchTermLength - 1];
-          // Check if this new highlight already exists to avoid duplicates
-          let isDuplicate = highlighting.some(
-            (h) => h[0] === newHighlight[0] && h[1] === newHighlight[1]
-          );
-          if (!isDuplicate) {
-            highlighting.push(newHighlight);
+      if (searchTerm) {
+        // Function to find all occurrences of a searchTerm in a text and push their start and end indices
+        const addHighlightIndices = (text) => {
+          const lowerText = text.toLowerCase();
+          const searchTermLength = searchTerm.length;
+          let startIndex = 0;
+          while (
+            (startIndex = lowerText.indexOf(
+              searchTerm.toLowerCase(),
+              startIndex
+            )) !== -1
+          ) {
+            const endIndex = startIndex + searchTermLength - 1;
+            let isUnique = true;
+            for (let range of highlighting) {
+              if (range[0] === startIndex && range[1] === endIndex) {
+                isUnique = false;
+                break;
+              }
+            }
+            if (isUnique) {
+              highlighting.push([startIndex, endIndex]);
+            }
+            startIndex += searchTermLength;
           }
-          startIndex += searchTermLength; // Move start index forward
-        }
-      };
+        };
 
-      // Highlighting for 'name'
-      addHighlightIndices(place.name, searchTerm);
+        // Highlighting for 'name'
+        addHighlightIndices(place.name);
 
-      // Highlighting for 'hierarchy'
-      addHighlightIndices(place.hierarchy, searchTerm);
-
+        // Highlighting for 'hierarchy'
+        addHighlightIndices(place.hierarchy);
+      }
       return { ...place, highlighting };
     });
 
     //  limit results if 'limit' is specified in the request
-    if (req.body.limit) {
-      response = response.slice(0, req.body.limit);
-    }
+    // if (req.body.limit) {
+    //   response = response.slice(0, req.body.limit);
+    // }
 
     res.json({ places: response });
   } catch (error) {
