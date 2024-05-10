@@ -6,13 +6,12 @@ const {
   validateMarket,
   validateLocale,
   validateCurrency,
-  validateIata,
-  validateEntity,
   validateQueryLegs,
   validateDate,
   validateCabin,
   validateTravelers,
 } = require("../../services/flight-search");
+const validateRequest = require("../../services/flight-search/validate-request");
 
 const createRouter = express.Router();
 
@@ -43,15 +42,21 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
     });
   }
 
-  // Validating the MARKET
-  const marketValidation = validateMarket(query);
-  if (marketValidation.error) {
-    return res.status(400).json({
-      code: marketValidation.code,
-      message: marketValidation.message,
-      details: [],
-    });
-  }
+  // // Validating the MARKET
+  // const marketValidation = validateMarket(query);
+  // if (marketValidation.error) {
+  //   return res.status(400).json({
+  //     code: marketValidation.code,
+  //     message: marketValidation.message,
+  //     details: [],
+  //   });
+  // }
+
+const validationResults = validateRequest(query);
+if(validationResults.error) {
+  return res.status(400).send(validationResults.message)
+}
+
 
   // Validating the LOCALE
   const localeValidation = validateLocale(query);
@@ -72,28 +77,6 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
       details: [],
     });
   }
-
-  // const entityValidation = validateEntity(query.queryLegs);
-  // if (entityValidation.error) {
-  //   return res
-  //     .status(400)
-  //     .json({
-  //       code: entityValidation.code,
-  //       message: entityValidation.message,
-  //       details: [],
-  //     });
-  // }
-
-  // const iataValidation = validateIata(query.queryLegs);
-  // if (iataValidation.error) {
-  //   return res
-  //     .status(400)
-  //     .json({
-  //       code: iataValidation.code,
-  //       message: iataValidation.message,
-  //       details: [],
-  //     });
-  // }
 
   //Validating the ENTITY ID and IATA CODE
   const validationResult = validateQueryLegs(query.queryLegs);

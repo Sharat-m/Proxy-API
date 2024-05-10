@@ -24,6 +24,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
     const autoJson = require("../../data/autosuggestion.json");
     // console.log("autoJson:" , autoJson);
     // Filter logic to get the searchterm based on market and country name and name
+
     //Response is based on Market and searchTerm
     const results = autoJson
       .filter((place) =>
@@ -41,12 +42,12 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
     // Highlighting the matching parts in both name and hierarchy
     const response = results.map((place) => {
       let highlighting = [];
-
       if (searchTerm) {
         // Function to find all occurrences of a searchTerm in a text and push their start and end indices
         const addHighlightIndices = (text) => {
           const lowerText = text.toLowerCase();
           const searchTermLength = searchTerm.length;
+          console.log("searchTermLength:", searchTermLength);
           let startIndex = 0;
           while (
             (startIndex = lowerText.indexOf(
@@ -55,6 +56,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
             )) !== -1
           ) {
             const endIndex = startIndex + searchTermLength;
+            // console.log("endIndex:", endIndex);
             let isUnique = true;
             for (let range of highlighting) {
               if (range[0] === startIndex && range[1] === endIndex) {
@@ -71,16 +73,16 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
 
         // Highlighting for 'name'
         addHighlightIndices(place.name);
-
         // Highlighting for 'hierarchy'
         addHighlightIndices(place.hierarchy);
       }
+      // returning places and highlighting
       return { ...place, highlighting };
     });
 
     res.json({ places: response });
   } catch (error) {
-    console.log("error:", error);
+    // console.log("error:", error);
     if (!res.headersSent) {
       // Check if headers have not been sent
       res.status(500).json({ error: "Internal server error" });
