@@ -17,11 +17,11 @@ function validateMarket(query) {
   const marketExist = marketsData.some((market) => market.code === marketCode);
   // console.log("marketExist:", marketExist);
   if (marketCode && !marketExist) {
-    errors.push("market code is invalid");
+    errors.push("Market code is invalid");
   }
   if (errors.length > 0) {
     return { error: true, errors };
-}
+  }
   return { error: false }; //Indicates the market is valid
 }
 

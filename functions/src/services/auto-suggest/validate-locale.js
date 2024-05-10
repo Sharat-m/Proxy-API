@@ -17,11 +17,11 @@ function validateLocale(query) {
   const localeExist = localesData.some((locale) => locale.code === localeCode);
   // console.log("localeExist:", localeExist);
   if (localeCode && !localeExist) {
-    errors.push( "Locale code is invalid");
+    errors.push("Locale code is invalid");
   }
   if (errors.length > 0) {
     return { error: true, errors };
-}
+  }
 
   return { error: false }; //Indicates the market is valid
 }

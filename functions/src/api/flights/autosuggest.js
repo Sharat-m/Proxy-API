@@ -1,10 +1,5 @@
 const express = require("express");
-
-const {
-  validateMarket,
-  validateLocale,
-} = require("../../services/auto-suggest");
-
+const validateRequest = require("../../services/auto-suggest/validate-request");
 const autoRouter = express.Router();
 
 autoRouter.post("/autosuggest/flights", (req, res) => {
@@ -14,42 +9,22 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
   // const locale = query.locale;
   // const { market, locale, searchTerm } = req.body.query;
   const { market, searchTerm } = req.body.query;
- let limit = req.body.limit;
+  let limit = req.body.limit;
+  // console.log(limit);
 
-  // Validating the Auto Suggest Market
-  const marketValidation = validateMarket(query);
-  if (marketValidation.error) {
+  //validating all the request getting response
+  const validationResult = validateRequest(query, limit);
+  if (validationResult.error) {
     return res.status(400).json({
-      errors: marketValidation.errors,
+      errors: validationResult.errors,
     });
-  }
-
-  // Validating the Auto Suggest Locale
-  const localeValidation = validateLocale(query);
-  if (localeValidation.error) {
-    return res.status(400).json({
-      errors: localeValidation.errors,
-    });
-  }
-
-  //Validating the limit
-  if (limit !== undefined) {
-    limit = parseInt (limit);
-    if (isNaN(limit)) {
-      return res.status(400).json({ error : "Limit must be a number "});
-    } else if ( limit < 1){
-      return res.status(400).json ( { error : "Not allowed :0 enter a numebr greater than 1"});
-    }else if( limit >50){
-      return res.status(400).json({ error:"Not allowed more than 50"})
-    }
-  }else {
-    limit =10; // Default limit
   }
 
   try {
     const autoJson = require("../../data/autosuggestion.json");
     // console.log("autoJson:" , autoJson);
     // Filter logic to get the searchterm based on market and country name and name
+    //Response is based on Market and searchTerm
     const results = autoJson
       .filter((place) =>
         market ? place.countryId.toUpperCase() === market.toUpperCase() : true
@@ -102,7 +77,6 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
       }
       return { ...place, highlighting };
     });
-
 
     res.json({ places: response });
   } catch (error) {

@@ -1,14 +1,27 @@
 //############ Limit ####################
 function validatelimit(limit) {
-  console.log("limit:", limit);
-  if (limit < 1) {
-    return { error: true, code: 3, message: "limit must be greater than or equal to 1" };
-  
+  const errors = [];
+  // console.log("limit:", limit);
+
+  if (limit != undefined) {
+    limit = parseInt(limit);
+    if (isNaN(limit)) {
+      errors.push("Unable to process JSON");
+    } else if (limit < 1) {
+      errors.push("limit must be greater than or equal to 1");
+    } else if (limit > 50) {
+      errors.push("limit must be less than or equal to 50");
+    } else {
+      return { limit };
+    }
+  } else {
+    return { limit: 10 }; //if limit is not specified
   }
-  if (limit > 50) {
-    return { error: true, code: 3, message: "limit must be less than or equal to 50" };
-  
+
+  if (errors.length > 0) {
+    return { error: true, errors };
   }
+
   return { error: false }; //Indicates the limitt is valid
 }
 
