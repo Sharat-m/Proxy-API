@@ -20,8 +20,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
   const marketValidation = validateMarket(query);
   if (marketValidation.error) {
     return res.status(400).json({
-      code: marketValidation.code,
-      errors: [marketValidation.message],
+      errors: marketValidation.errors,
     });
   }
 
