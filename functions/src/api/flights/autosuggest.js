@@ -14,15 +14,14 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
   // const locale = query.locale;
   // const { market, locale, searchTerm } = req.body.query;
   const { market, searchTerm } = req.body.query;
-  const limit = req.body.limit || 10;
+ let limit = req.body.limit;
 
   // Validating the Auto Suggest Market
   const marketValidation = validateMarket(query);
   if (marketValidation.error) {
     return res.status(400).json({
       code: marketValidation.code,
-      message: marketValidation.message,
-      details: [],
+      errors: [marketValidation.message],
     });
   }
 
@@ -30,15 +29,23 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
   const localeValidation = validateLocale(query);
   if (localeValidation.error) {
     return res.status(400).json({
-      code: localeValidation.code,
-      message: localeValidation.message,
-      details: [],
+      errors: localeValidation.errors,
     });
   }
 
-  // if (!searchTerm) {
-  //   return res.status(400).json({ error: "Search term is required " });
-  // }
+  //Validating the limit
+  if (limit !== undefined) {
+    limit = parseInt (limit);
+    if (isNaN(limit)) {
+      return res.status(400).json({ error : "Limit must be a number "});
+    } else if ( limit < 1){
+      return res.status(400).json ( { error : "Not allowed :0 enter a numebr greater than 1"});
+    }else if( limit >50){
+      return res.status(400).json({ error:"Not allowed more than 50"})
+    }
+  }else {
+    limit =10; // Default limit
+  }
 
   try {
     const autoJson = require("../../data/autosuggestion.json");
@@ -73,7 +80,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
               startIndex
             )) !== -1
           ) {
-            const endIndex = startIndex + searchTermLength - 1;
+            const endIndex = startIndex + searchTermLength;
             let isUnique = true;
             for (let range of highlighting) {
               if (range[0] === startIndex && range[1] === endIndex) {
@@ -97,10 +104,6 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
       return { ...place, highlighting };
     });
 
-    //  limit results if 'limit' is specified in the request
-    // if (req.body.limit) {
-    //   response = response.slice(0, req.body.limit);
-    // }
 
     res.json({ places: response });
   } catch (error) {

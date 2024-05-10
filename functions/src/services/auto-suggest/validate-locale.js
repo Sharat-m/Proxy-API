@@ -2,18 +2,27 @@ const localesData = require("../../data/locales.json").locales;
 
 //############ LOCALE ####################
 function validateLocale(query) {
+  const errors = [];
   const localeCode = query.locale;
   // console.log("localeCode:", localeCode);
-  if (!localeCode) {
-    return { error: true, code: 3, message: "The Locale is missing" };
+  //checking if locale is provided and is not emepty
+  if (localeCode === undefined || localeCode === null) {
+    errors.push("query.locale must not be null");
+    errors.push("query.locale must not be empty");
+  } else if (localeCode.trim() === "") {
+    errors.push("query.locale must not be empty");
   }
 
   //checking the locale code present in the locale json file
   const localeExist = localesData.some((locale) => locale.code === localeCode);
   // console.log("localeExist:", localeExist);
-  if (!localeExist) {
-    return { error: true, code: 3, message: "The locale is invalid" };
+  if (localeCode && !localeExist) {
+    errors.push( "Locale code is invalid");
   }
+  if (errors.length > 0) {
+    return { error: true, errors };
+}
+
   return { error: false }; //Indicates the market is valid
 }
 
