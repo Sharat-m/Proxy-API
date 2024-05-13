@@ -4,21 +4,21 @@ const marketsData = require("../../data/markets.json").markets;
 function validateMarket(query) {
   const marketCode = query.market;
   // console.log("marketCode:", marketCode);
-  let errors = '';
+
   if (!marketCode) {
-    errors= errors + "The market is missing\n" ;
+    return { error: true, code: 3, message: "The market is missing" };
   }
  if(marketCode == null){
-  errors= errors +"The market is invalid\n";
+  return { error:true ,error: true, code: 3, message: "The market is invalid" }
  }
   //checking the market code present in the market json file
   const marketExist = marketsData.some((market) => market.code === marketCode);
 //   console.log("marketExist:", marketExist); true or false
   if (!marketExist) {
-    errors= errors +"The market is invalid\n" ;
+    return { error: true, code: 3, message: "The market is invalid" };
   }
 
-  return errors ? { error: true, message: errors } : { error: false };//Indicates the market is valid
+  return { error: false }; //Indicates the market is valid
 }
 
 module.exports = validateMarket;

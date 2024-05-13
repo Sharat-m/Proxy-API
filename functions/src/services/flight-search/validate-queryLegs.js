@@ -45,7 +45,7 @@ function validateQueryLegs(queryLegs) {
         error: true,
         code: 3,
         // message: "Destination IATA code is invalid",
-        message: "The QueryPlace ID is not valid IATA",
+        message: "The QueryPlace ID is not valid IATA destination",
       };
     }
 
@@ -62,14 +62,13 @@ function validateQueryLegs(queryLegs) {
     }
 
     // Validate destination Entity ID
-    const checkingDestinationEntityId =
-      entityCodes.includes(destinationEntityId);
+    const checkingDestinationEntityId = entityCodes.includes(destinationEntityId);
     // console.log("checkingDestinationEntityId:", checkingDestinationEntityId);
     if (destinationEntityId && !checkingDestinationEntityId) {
       return {
         error: true,
         code: 3,
-        message: "The QueryPlace ID is not valid entity ID",
+        message: "The QueryPlace ID is not valid entity ID dest",
         // message: "Destination Entity ID is invalid",
       };
     }

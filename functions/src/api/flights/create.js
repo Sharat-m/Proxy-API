@@ -42,6 +42,14 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
     });
   }
 
+  const validationResults = validateRequest(query);
+  if (validationResults.error) {
+    return res.status(400).json({
+      code: validationResults.code,
+      message: validationResults.message,
+      details: [],
+    });
+  }
   // // Validating the MARKET
   // const marketValidation = validateMarket(query);
   // if (marketValidation.error) {
@@ -52,41 +60,35 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
   //   });
   // }
 
-const validationResults = validateRequest(query);
-if(validationResults.error) {
-  return res.status(400).send(validationResults.message)
-}
-
-
   // Validating the LOCALE
-  const localeValidation = validateLocale(query);
-  if (localeValidation.error) {
-    return res.status(400).json({
-      code: localeValidation.code,
-      message: localeValidation.message,
-      details: [],
-    });
-  }
+  // const localeValidation = validateLocale(query);
+  // if (localeValidation.error) {
+  //   return res.status(400).json({
+  //     code: localeValidation.code,
+  //     message: localeValidation.message,
+  //     details: [],
+  //   });
+  // }
 
   // Validating the CURRENCY
-  const currencyValidation = validateCurrency(query);
-  if (currencyValidation.error) {
-    return res.status(400).json({
-      code: currencyValidation.code,
-      message: currencyValidation.message,
-      details: [],
-    });
-  }
+  // const currencyValidation = validateCurrency(query);
+  // if (currencyValidation.error) {
+  //   return res.status(400).json({
+  //     code: currencyValidation.code,
+  //     message: currencyValidation.message,
+  //     details: [],
+  //   });
+  // }
 
   //Validating the ENTITY ID and IATA CODE
-  const validationResult = validateQueryLegs(query.queryLegs);
-  if (validationResult.error) {
-    return res.status(400).json({
-      code: validationResult.code,
-      message: validationResult.message,
-      details: [],
-    });
-  }
+  // const queryValidation = validateQueryLegs(query.queryLegs);
+  // if (queryValidation.error) {
+  //   return res.status(400).json({
+  //     code: queryValidation.code,
+  //     message: queryValidation.message,
+  //     details: [],
+  //   });
+  // }
 
   // Validating the DATE
   const dateValidation = validateDate(query.queryLegs);
