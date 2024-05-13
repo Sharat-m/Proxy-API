@@ -3,13 +3,8 @@ const { db } = require("../../config/admin");
 const { fsReadFileToJSON } = require("../../utils/fileReader");
 const generateSessionToken = require("../../utils/tokenGenerate");
 const {
-  validateMarket,
-  validateLocale,
-  validateCurrency,
   validateQueryLegs,
   validateDate,
-  validateCabin,
-  validateTravelers,
 } = require("../../services/flight-search");
 const validateRequest = require("../../services/flight-search/validate-request");
 

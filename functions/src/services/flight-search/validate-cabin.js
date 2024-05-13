@@ -6,6 +6,14 @@ function validateCabin(query) {
     "CABIN_CLASS_FIRST",
     "CABIN_CLASS_BUSINESS",
   ];
+  if (!cabinClass) {
+    return {
+      error: true,
+      code: 3,
+      message: "The cabin class is invalid",
+    };
+  }
+
   if (!validCabinClass.includes(cabinClass)) {
     return {
       error: true,
