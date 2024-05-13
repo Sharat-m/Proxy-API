@@ -47,7 +47,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
         const addHighlightIndices = (text) => {
           const lowerText = text.toLowerCase();
           const searchTermLength = searchTerm.length;
-          console.log("searchTermLength:", searchTermLength);
+          // console.log("searchTermLength:", searchTermLength);
           let startIndex = 0;
           while (
             (startIndex = lowerText.indexOf(

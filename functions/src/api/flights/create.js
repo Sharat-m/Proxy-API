@@ -35,12 +35,11 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
   //   });
   // }
 
-  if(query.queryLegs.length === 1){
+  if (query.queryLegs.length === 1) {
     console.log("oneway");
   } else {
     console.log("Twoway");
   }
-  
 
   if (!query.queryLegs || query.queryLegs.length === 0) {
     return res.status(400).json({
@@ -59,7 +58,6 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
       details: [],
     });
   }
- 
 
   //Validating the ENTITY ID and IATA CODE
   const queryValidation = validateQueryLegs(query.queryLegs);
@@ -81,8 +79,6 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
     });
   }
 
-  
-
   //******************Connecting firebase firestore databse***************************************
   const sessionToken = generateSessionToken();
   // console.log('Session Token:', sessionToken);
@@ -95,10 +91,10 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
       market: query.market,
       locale: query.locale,
       currency: query.currency,
-      trip:query.queryLegs.length,
+      trip: query.queryLegs.length,
     });
-
-    if(query.queryLegs.length === 1){
+    let tripType = query.queryLegs.length;//checking the request is oneway or twoway
+    if (tripType === 1) {
       const jsonData = await fsReadFileToJSON("./src/data/one-way-create.json");
       return res.status(200).send({
         sessionToken: sessionToken,
@@ -106,7 +102,7 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
         action: "RESULT_ACTION_REPLACED",
         content: jsonData,
       });
-    }else{
+    } else if (tripType === 2) {
       const jsonData = await fsReadFileToJSON("./src/data/two-way-create.json");
       return res.status(200).send({
         sessionToken: sessionToken,
@@ -115,8 +111,6 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
         content: jsonData,
       });
     }
-
-    
   } catch (error) {
     // console.log(error);
     return res.status(500).send({
