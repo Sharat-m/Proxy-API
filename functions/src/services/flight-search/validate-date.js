@@ -2,49 +2,33 @@ function validateDate(queryLegs) {
   const todayMidnight = new Date();
   todayMidnight.setHours(0, 0, 0, 0);
 
+  let errors = [];
+
   for (const leg of queryLegs) {
     // Validate if year, month, or day are missing
-    if (
-      !leg.date ||
-      leg.date.year == null ||
-      leg.date.month == null ||
-      leg.date.day == null
-    ) {
       if (!leg.date) {
-        return {
-          error: true,
-          code: 3,
-          message: "The query leg list contains an invalid or null date",
-        };
+        errors.push("The query leg list contains an invalid or null date");
+      continue; 
       }
       //checking the year
       if (leg.date.year == null) {
-        return {
-          error: true,
-          code: 1,
-          message: "The date cannot be historical",
-        };
+       errors.push("The date cannot be historical");
+       continue
       }
       //checking the month and day
       if (leg.date.month == null || leg.date.day == null) {
-        return {
-          error: true,
-          code: 1,
-          message: "The query leg list contains an invalid or null date",
-        };
+       errors.push( "The query leg list contains an invalid or null date");
+     continue;
       }
-    }
-
+    
     //checking the previous date
-    const legDate = new Date(
-      `${leg.date.year}-${leg.date.month}-${leg.date.day}`
-    );
+    const legDate = new Date(leg.date.year,leg.date.month - 1,leg.date.day)
     if (legDate < todayMidnight) {
-      return { error: true, code: 3, message: "The date cannot be historical" };
+       errors.push("The date cannot be historical");
     }
   }
 
-  // Checking the Departure Date and Return Date
+  // Checking the dates are in ascending order
   for (let i = 1; i < queryLegs.length; i++) {
     const returnDate = new Date(
       `${queryLegs[i].date.year}-${queryLegs[i].date.month}-${queryLegs[i].date.day}`
@@ -55,12 +39,12 @@ function validateDate(queryLegs) {
       }`
     );
     if (returnDate < departureDate) {
-      return {
-        error: true,
-        code: 4,
-        message: "The dates of the query legs must be in ascending order",
-      };
+      errors.push("The dates of the query legs must be in ascending order");
     }
+  }
+  const message = errors.join("\n");
+  if(errors.length > 0) {
+    return { error: true, message: message}
   }
   return { error: false }; // Indicating no error
 }

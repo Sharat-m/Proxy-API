@@ -1,94 +1,53 @@
 // validateQueryLegs.js
-const validateIata = require("./validate-iata");
-const validateEntity = require("./validate-entity");
 
 const iataData = require("../../data/geo-data.json").places;
 const iataCodes = Object.values(iataData).map((place) => place.iata);
 const entityCodes = Object.values(iataData).map((place) => place.entityId);
 
 function validateQueryLegs(queryLegs) {
+  let errors = [];
   for (const leg of queryLegs) {
     const originPlaceId = leg.originPlaceId;
-    // console.log("originPlaceId", originPlaceId); //originPlaceId { iata: 'IXE' }
     const destinationPlaceId = leg.destinationPlaceId;
-    // console.log("destinationPlaceId:", destinationPlaceId); //destinationPlaceId: { entityId: '128668563' }
-
     // Iata code
     const originIata = originPlaceId && originPlaceId.iata;
-    // console.log("originIata:", originIata); // IXE
     const destinationIata = destinationPlaceId && destinationPlaceId.iata;
-    // console.log("destinationIata:", destinationIata); //undefined
     // Entity Id
     const originEntityId = originPlaceId && originPlaceId.entityId;
-    // console.log("originEntityId: ", originEntityId); //undefined
     const destinationEntityId =
       destinationPlaceId && destinationPlaceId.entityId;
-    // console.log("destinationEntityId:", destinationEntityId); // 128668563
 
     // Validate origin IATA
-    const checkingOriginIata = iataCodes.includes(originIata);
-    // console.log("checkingOriginIata:", checkingOriginIata); //true
+    const checkingOriginIata = iataCodes.includes(originIata); //true
     if (originIata && !checkingOriginIata) {
-      return {
-        error: true,
-        code: 3,
-        //  message: "Origin IATA code is invalid",
-        message: "The QueryPlace ID is not valid IATA",
-      };
+      errors.push("The QueryPlace ID is not valid IATA"); //  message: "Origin IATA code is invalid",
     }
 
     // Validate destination IATA
-    const checkingDestinationIata = iataCodes.includes(destinationIata);
-    // console.log("checkingDestinationIata:", checkingDestinationIata); //false
+    const checkingDestinationIata = iataCodes.includes(destinationIata); //false
     if (destinationIata && !checkingDestinationIata) {
-      return {
-        error: true,
-        code: 3,
-        // message: "Destination IATA code is invalid",
-        message: "The QueryPlace ID is not valid IATA destination",
-      };
+      errors.push("The QueryPlace ID is not valid IATA"); // message: "Destination IATA code is invalid",
     }
 
     // Validate origin Entity ID
     const checkingOriginEntityId = entityCodes.includes(originEntityId);
-    // console.log("checkingOriginEntityId:", checkingOriginEntityId);
     if (originEntityId && !checkingOriginEntityId) {
-      return {
-        error: true,
-        code: 3,
-        message: "The QueryPlace ID is not valid entity ID",
-        // message: "Origin Entity ID is invalid"
-      };
+      errors.push("The QueryPlace ID is not valid entity ID"); // message: "Origin Entity ID is invalid"
     }
 
     // Validate destination Entity ID
-    const checkingDestinationEntityId = entityCodes.includes(destinationEntityId);
-    // console.log("checkingDestinationEntityId:", checkingDestinationEntityId);
+    const checkingDestinationEntityId =
+      entityCodes.includes(destinationEntityId);
     if (destinationEntityId && !checkingDestinationEntityId) {
-      return {
-        error: true,
-        code: 3,
-        message: "The QueryPlace ID is not valid entity ID dest",
-        // message: "Destination Entity ID is invalid",
-      };
+      errors.push("The QueryPlace ID is not valid entity ID"); // message: "Destination Entity ID is invalid",
     }
 
     if (!originIata && !originEntityId) {
-      return {
-        error: true,
-        code: 3,
-        message: "The QueryPlace ID cannot be null",
-        // message: "Origin place identifier is missing",
-      };
+      errors.push("The QueryPlace ID cannot be null"); // message: "Origin place identifier is missing",
     }
 
     if (!destinationIata && !destinationEntityId) {
-      return {
-        error: true,
-        code: 3,
-        message: "The QueryPlace ID cannot be null",
-        // message: "Destination place identifier is missing",
-      };
+      errors.push("The QueryPlace ID cannot be null"); // message: "Destination place identifier is missing",
     }
 
     //getting the iata of origin
@@ -127,16 +86,16 @@ function validateQueryLegs(queryLegs) {
     // Check if the origin and destination identifiers are the same
     if (originEntityIdsIata === destinationEntityIdsIata) {
       // console.log("Origin and destination cannot be the same");
-      return {
-        error: true,
-        code: 3,
-        message: "RESULT_STATUS_COMPLETE",
-        action: "RESULT_ACTION_OMITTED",
-      };
+      errors.push("Origin and destination cannot be the same");
+      // message: "RESULT_STATUS_COMPLETE",
+      // action: "RESULT_ACTION_OMITTED"
     }
   }
-
-  return { error: false };
+  const message = errors.join("\n");
+  if(errors.length > 0) {
+    return { error: true, message: message}
+  }
+  return { error: false }; // Indicating no error
 }
 
 module.exports = validateQueryLegs;

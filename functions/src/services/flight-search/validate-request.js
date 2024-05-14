@@ -2,9 +2,9 @@ const validateMarket = require("./validate-market");
 const validateLocale = require("./validate-locale");
 const validateCurrency = require("./validate-currency");
 const validateQueryLegs = require("./validate-queryLegs");
-const validateTravelers = require ("./validate-travelers");
+const validateTravelers = require("./validate-travelers");
 const validateCabin = require("./validate-cabin");
-const validateDate = require ("./validate-date");
+const validateDate = require("./validate-date");
 
 function validateRequest(query) {
   let errors = [];
@@ -28,33 +28,35 @@ function validateRequest(query) {
   }
 
   //validate queryLegs entityId and IATA code
-//   const queryResult = validateQueryLegs(query.queryLegs);
-//   if (queryResult.error) {
-//     errors.push(queryResult.message);
-//   }
+  const queryResult = validateQueryLegs(query.queryLegs);
+  if (queryResult.error) {
+    errors.push(queryResult.message);
+  }
 
   // Validating the DATE
-//   const dateResult = validateDate(query.queryLegs);
-//   if (dateResult.error) {
-//     errors.push(dateResult.message);
-//   }
-
+  const dateResult = validateDate(query.queryLegs);
+  if (dateResult.error) {
+    errors.push(dateResult.message);
+  }
 
   //validate travellers
   const travelersResult = validateTravelers(query);
+  // console.log("travelersResult",travelersResult);
   if (travelersResult.error) {
     errors.push(travelersResult.message);
   }
- 
-   //validate cabinclass
-   const cabinResult = validateCabin(query);
+
+  // console.log(errors);
+
+  //validate cabinclass
+  const cabinResult = validateCabin(query);
   if (cabinResult.error) {
     errors.push(cabinResult.message);
   }
 
   const errorMessage = errors.join("\n");
   return errorMessage
-    ? { error: true, code: 3, message: errorMessage }
+    ? { error: true, code: 5, message: errorMessage }
     : { error: false };
 }
 

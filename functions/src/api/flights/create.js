@@ -5,6 +5,7 @@ const generateSessionToken = require("../../utils/tokenGenerate");
 const {
   validateQueryLegs,
   validateDate,
+  validateTravelers,
 } = require("../../services/flight-search");
 const validateRequest = require("../../services/flight-search/validate-request");
 
@@ -30,11 +31,7 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
   //   });
   // }
 
-  if (query.queryLegs.length === 1) {
-    console.log("oneway");
-  } else {
-    console.log("Twoway");
-  }
+
 
   if (!query.queryLegs || query.queryLegs.length === 0) {
     return res.status(400).json({
@@ -53,6 +50,16 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
       details: [],
     });
   }
+
+  //Validating the Travellers
+  // const queryTravellers = validateTravelers (query);
+  // if (queryTravellers.error) {
+  //   return res.status(400).json({
+  //     code: queryTravellers.code,
+  //     message: queryTravellers.message,
+  //     details: [],
+  //   });
+  // }
 
   //Validating the ENTITY ID and IATA CODE
   const queryValidation = validateQueryLegs(query.queryLegs);

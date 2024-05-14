@@ -1,5 +1,7 @@
+// ################## Validate cabinclass #################
 function validateCabin(query) {
   const cabinClass = query.cabinClass;
+  let errors = [] ;
   const validCabinClass = [
     "CABIN_CLASS_ECONOMY",
     "CABIN_CLASS_PREMIUM_ECONOMY",
@@ -7,21 +9,17 @@ function validateCabin(query) {
     "CABIN_CLASS_BUSINESS",
   ];
   if (!cabinClass) {
-    return {
-      error: true,
-      code: 3,
-      message: "The cabin class is invalid",
-    };
+  errors.push( "The cabin class is invalid");
+  } else if (!validCabinClass.includes(cabinClass)) {
+      errors.push(`proto: (line 36:23): invalid value for enum type: "${cabinClass}"`);
   }
 
-  if (!validCabinClass.includes(cabinClass)) {
-    return {
-      error: true,
-      code: 3,
-      message: `proto: (line 36:23): invalid value for enum type: "${cabinClass}"`,
-    };
+  //Returning the errors if any  have been collected
+  const message = errors.join("\n");
+  if(errors.length > 0) {
+    return { error: true, message: message}
   }
-  return { error: false }; //Indicates the cabinclass is valid
+  return { error: false }; // Indicating no error
 }
 
 module.exports = validateCabin;

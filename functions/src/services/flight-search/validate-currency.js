@@ -15,7 +15,6 @@ function validateCurrency(query) {
   if (!currencyExist) {
     return { error: true, code: 3, message: "The currency is invalid" };
   }
-
   return { error: false }; //Indicates the currency is valid
 }
 module.exports = validateCurrency;
