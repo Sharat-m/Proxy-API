@@ -39,9 +39,9 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
     let adults = query.adults;
     const childrenAges = query.childrenAges;
     const totalChild = childrenAges.filter((age) => age > 1).length;
-    let totalAdultChild = totalChild + adults;//checking the total adult and child
+    let totalAdultChild = totalChild + adults; //checking the total adult and child
     if (totalAdultChild >= 9) {
-      const jsonData = await fsReadFileToJSON("./src/data/error.json");
+      const jsonData = await fsReadFileToJSON("./src/data/error-create.json");
       return res.status(200).send({
         sessionToken: sessionToken,
         status: "RESULT_STATUS_COMPLETE",

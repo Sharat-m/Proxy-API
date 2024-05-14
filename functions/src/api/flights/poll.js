@@ -13,26 +13,22 @@ pollRouter.post("/flights/live/search/:poll", async (req, res) => {
     let flightDetail = await docRef.get();
     // Fetching the data from database
     let response = flightDetail.data();
-    // console.log(response);
     let tripType = response.trip;
-    // console.log("tripType:", tripType);
     let adults = response.adults;
     const childrenAges = response.childrenAges;
     const totalChild = childrenAges.filter((age) => age > 1).length;
-    let totalAdultChild = totalChild + adults;//checking the total adult and child
-console.log(totalAdultChild);
-    if (flightDetail.exists) {
+    let totalAdultChild = totalChild + adults; //checking the total adult and child
 
+    if (flightDetail.exists) {
       if (totalAdultChild >= 9) {
-        const jsonData = await fsReadFileToJSON("./src/data/errorpoll.json");
+        const jsonData = await fsReadFileToJSON("./src/data/error-poll.json");
         return res.status(200).send({
           sessionToken: token,
           status: "RESULT_STATUS_COMPLETE",
           action: "RESULT_ACTION_NOT_MODIFIED",
           content: jsonData,
         });
-      }
-     else if (tripType === 1) {
+      } else if (tripType === 1) {
         const jsonData = await fsReadFileToJSON("./src/data/one-way-poll.json");
         return res.status(200).send({
           sessionToken: token,
