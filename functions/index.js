@@ -1,9 +1,7 @@
 const express = require("express");
-const fs = require("fs");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const routes = require('./src/core/routes');
-const { db } = require('./src/config/admin')
+const routes = require("./src/core/routes");
 
 //Main App
 const app = express();
@@ -19,8 +17,5 @@ const logger = require("firebase-functions/logger");
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
-
-// Export the app to Firebase Cloud Functions 
+// Export the app to Firebase Cloud Functions
 exports.app = onRequest(app);
-
-
