@@ -1,0 +1,184 @@
+{
+  "results": {
+    "itineraries": {},
+    "legs": {},
+    "segments": {},
+    "places": {
+      "27540839": {
+        "entityId": "27540839",
+        "parentId": "29475216",
+        "name": "Dubai",
+        "type": "PLACE_TYPE_CITY",
+        "iata": "DXB",
+        "coordinates": null
+      },
+      "27542924": {
+        "entityId": "27542924",
+        "parentId": "29475284",
+        "name": "Mangalore",
+        "type": "PLACE_TYPE_CITY",
+        "iata": "IXE",
+        "coordinates": null
+      },
+      "29475216": {
+        "entityId": "29475216",
+        "parentId": "",
+        "name": "United Arab Emirates",
+        "type": "PLACE_TYPE_COUNTRY",
+        "iata": "",
+        "coordinates": null
+      },
+      "29475284": {
+        "entityId": "29475284",
+        "parentId": "",
+        "name": "India",
+        "type": "PLACE_TYPE_COUNTRY",
+        "iata": "",
+        "coordinates": null
+      }
+    },
+    "carriers": {},
+    "agents": {
+      "a341": {
+        "name": "telme",
+        "type": "AGENT_TYPE_TRAVEL_AGENT",
+        "imageUrl": "https://logos.skyscnr.com/images/websites/a341.png",
+        "feedbackCount": 0,
+        "rating": 0,
+        "ratingBreakdown": null,
+        "isOptimisedForMobile": false
+      }
+    },
+    "alliances": {}
+  },
+  "stats": {
+    "itineraries": {
+      "minDuration": 0,
+      "maxDuration": 0,
+      "total": {
+        "count": 0,
+        "minPrice": {
+          "amount": "",
+          "unit": "PRICE_UNIT_UNSPECIFIED",
+          "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+        }
+      },
+      "stops": {
+        "direct": {
+          "total": {
+            "count": 0,
+            "minPrice": {
+              "amount": "",
+              "unit": "PRICE_UNIT_UNSPECIFIED",
+              "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+            }
+          },
+          "ticketTypes": {
+            "singleTicket": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            },
+            "multiTicketNonNpt": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            },
+            "multiTicketNpt": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            }
+          }
+        },
+        "oneStop": {
+          "total": {
+            "count": 0,
+            "minPrice": {
+              "amount": "",
+              "unit": "PRICE_UNIT_UNSPECIFIED",
+              "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+            }
+          },
+          "ticketTypes": {
+            "singleTicket": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            },
+            "multiTicketNonNpt": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            },
+            "multiTicketNpt": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            }
+          }
+        },
+        "twoPlusStops": {
+          "total": {
+            "count": 0,
+            "minPrice": {
+              "amount": "",
+              "unit": "PRICE_UNIT_UNSPECIFIED",
+              "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+            }
+          },
+          "ticketTypes": {
+            "singleTicket": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            },
+            "multiTicketNonNpt": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            },
+            "multiTicketNpt": {
+              "count": 0,
+              "minPrice": {
+                "amount": "",
+                "unit": "PRICE_UNIT_UNSPECIFIED",
+                "updateStatus": "PRICE_UPDATE_STATUS_UNSPECIFIED"
+              }
+            }
+          }
+        }
+      },
+      "hasChangeAirportTransfer": false
+    }
+  },
+  "sortingOptions": {
+    "best": [],
+    "cheapest": [],
+    "fastest": []
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "results": {
+        "itineraries": {},
+        "legs": {},
+        "segments": {},
+        "places": {},
+        "carriers": {},
+        "agents": {},
+        "alliances": {}
+    },
+    "stats": {
+        "itineraries": null
+    },
+    "sortingOptions": {
+        "best": [],
+        "cheapest": [],
+        "fastest": []
+    }
+}

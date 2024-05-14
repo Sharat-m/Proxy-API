@@ -3,7 +3,11 @@ function validateDate(queryLegs) {
   todayMidnight.setHours(0, 0, 0, 0);
 
   let errors = [];
-
+ // Check if queryLegs is defined and is an array
+ if (!Array.isArray(queryLegs) || queryLegs.length === 0) {
+  errors.push("The query leg list must contain at least 1 leg");
+  return { error: true, message: errors.join("\n") };
+}
   for (const leg of queryLegs) {
     // Validate if year, month, or day are missing
       if (!leg.date) {

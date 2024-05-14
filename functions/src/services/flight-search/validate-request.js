@@ -6,7 +6,8 @@ const validateTravelers = require("./validate-travelers");
 const validateCabin = require("./validate-cabin");
 const validateDate = require("./validate-date");
 
-function validateRequest(query) {
+function validateRequest(query)
+ {
   let errors = [];
 
   //validate market
@@ -26,17 +27,20 @@ function validateRequest(query) {
   if (currencyResult.error) {
     errors.push(currencyResult.message);
   }
+  if (!query.queryLegs || !Array.isArray(query.queryLegs) || query.queryLegs.length === 0) {
+    errors.push("The query leg list must contain at least 1 leg");
+  } else {
+    // Validate query legs
+    const queryLegsResult = validateQueryLegs(query.queryLegs);
+    if (queryLegsResult.error) {
+      errors = errors.concat(queryLegsResult.message.split('\n')); // Append each error on a new line
+    }
 
-  //validate queryLegs entityId and IATA code
-  const queryResult = validateQueryLegs(query.queryLegs);
-  if (queryResult.error) {
-    errors.push(queryResult.message);
-  }
-
-  // Validating the DATE
-  const dateResult = validateDate(query.queryLegs);
-  if (dateResult.error) {
-    errors.push(dateResult.message);
+    // Validate date for each leg
+    const dateResult = validateDate(query.queryLegs);
+    if (dateResult.error) {
+      errors.push(dateResult.message);
+    }
   }
 
   //validate travellers
@@ -56,7 +60,9 @@ function validateRequest(query) {
 
   const errorMessage = errors.join("\n");
   return errorMessage
-    ? { error: true, code: 5, message: errorMessage }
+    ? { error: true, 
+      code: 5, 
+      message: errorMessage }
     : { error: false };
 }
 

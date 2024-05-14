@@ -35,16 +35,7 @@ function validateTravelers(query) {
     errors.push("No successful responses were found for the request");
   }
 
-  // checking the count of child
-  let totalchild = childrenAges.filter((age) => age > 1);
-  let totalchilds = totalchild.length;
-  // console.log("totalchilds : ", totalchilds);
-  let totalAdultChild = totalchilds + adults;
-  // console.log("totalAdultChild :", totalAdultChild);
-  // Total adult and child should be below 10
-  if (!(totalAdultChild <= 9)) {
-    errors.push("RESULT_COMPLETE- TOTAL ADULT+ CHILD SHOULD BE LESS THAN 10");
-  }
+
   const message = errors.join("\n");
   if(errors.length > 0) {
     return { error: true, message: message}

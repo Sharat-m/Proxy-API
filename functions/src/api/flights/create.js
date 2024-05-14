@@ -2,11 +2,6 @@ const express = require("express");
 const { db } = require("../../config/admin");
 const { fsReadFileToJSON } = require("../../utils/fileReader");
 const generateSessionToken = require("../../utils/tokenGenerate");
-const {
-  validateQueryLegs,
-  validateDate,
-  validateTravelers,
-} = require("../../services/flight-search");
 const validateRequest = require("../../services/flight-search/validate-request");
 
 const createRouter = express.Router();
@@ -14,69 +9,12 @@ const createRouter = express.Router();
 // FLIGHT CREATE REQUEST API
 createRouter.post("/flights/live/search/create", async (req, res) => {
   const { query } = req.body;
-  // const queryLegsLength =req.body.queryLegs;
-  console.log(query.queryLegs.length);
-  // console.log("query:", query);
-  // console.log("market:", query.market );
-  // console.log("locale:", query.locale);
-  // console.log("currency:", query.currency);
-
-  // checking the query
-  // if (!query) {
-  //   return res.status(400).json({
-  //     code: 3,
-  //     message:
-  //       "The currency is missing\nThe locale is missing\nThe market is missing\nThe query leg list must contain at least 1 leg\nThe number of adults must be between 1 and 8\nThe cabin class is invalid",
-  //     details: [],
-  //   });
-  // }
-
-
-
-  if (!query.queryLegs || query.queryLegs.length === 0) {
-    return res.status(400).json({
-      code: 3,
-      message: "The query leg list must contain at least 1 leg",
-      details: [],
-    });
-  }
-
-  // validating the Market, locale, currency, cabinclass and travellers
+  // validating the Market, locale, currency, cabinclass and travellers,all the query
   const validationResults = validateRequest(query);
   if (validationResults.error) {
     return res.status(400).json({
       code: validationResults.code,
       message: validationResults.message,
-      details: [],
-    });
-  }
-
-  //Validating the Travellers
-  // const queryTravellers = validateTravelers (query);
-  // if (queryTravellers.error) {
-  //   return res.status(400).json({
-  //     code: queryTravellers.code,
-  //     message: queryTravellers.message,
-  //     details: [],
-  //   });
-  // }
-
-  //Validating the ENTITY ID and IATA CODE
-  const queryValidation = validateQueryLegs(query.queryLegs);
-  if (queryValidation.error) {
-    return res.status(400).json({
-      code: queryValidation.code,
-      message: queryValidation.message,
-      details: [],
-    });
-  }
-
-  // Validating the DATE
-  const dateValidation = validateDate(query.queryLegs);
-  if (dateValidation.error) {
-    return res.status(400).json({
-      code: dateValidation.code,
-      message: dateValidation.message,
       details: [],
     });
   }
@@ -94,8 +32,24 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
       locale: query.locale,
       currency: query.currency,
       trip: query.queryLegs.length,
+      adults: query.adults,
+      childrenAges: query.childrenAges,
     });
-    let tripType = query.queryLegs.length;//checking the request is oneway or twoway
+
+    let adults = query.adults;
+    const childrenAges = query.childrenAges;
+    const totalChild = childrenAges.filter((age) => age > 1).length;
+    let totalAdultChild = totalChild + adults;//checking the total adult and child
+    if (totalAdultChild >= 9) {
+      const jsonData = await fsReadFileToJSON("./src/data/error.json");
+      return res.status(200).send({
+        sessionToken: sessionToken,
+        status: "RESULT_STATUS_COMPLETE",
+        action: "RESULT_ACTION_REPLACED",
+        content: jsonData,
+      });
+    }
+    let tripType = query.queryLegs.length; //checking the request is oneway or twoway
     if (tripType === 1) {
       const jsonData = await fsReadFileToJSON("./src/data/one-way-create.json");
       return res.status(200).send({
