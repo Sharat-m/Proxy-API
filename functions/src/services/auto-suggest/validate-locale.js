@@ -15,7 +15,6 @@ function validateLocale(query) {
 
   //checking the locale code present in the locale json file
   const localeExist = localesData.some((locale) => locale.code === localeCode);
-  // console.log("localeExist:", localeExist);
   if (localeCode && !localeExist) {
     errors.push("Locale code is invalid");
   }
@@ -23,7 +22,7 @@ function validateLocale(query) {
     return { error: true, errors };
   }
 
-  return { error: false }; //Indicates the market is valid
+  return { error: false }; //Indicates the locale is valid
 }
 
 module.exports = validateLocale;

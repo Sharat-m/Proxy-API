@@ -23,7 +23,7 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
   try {
     const autoJson = require("../../data/autosuggestion.json");
     // console.log("autoJson:" , autoJson);
-    // Filter logic to get the searchterm based on market and country name and name
+    // Filter logic to get the searchterm based on market and country name, IATAcode and name
 
     //Response is based on Market and searchTerm
     const results = autoJson
@@ -32,7 +32,8 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
       )
       .filter((place) =>
         searchTerm
-          ? place.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          ? place.iataCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            place.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             place.countryName.toLowerCase().includes(searchTerm.toLowerCase())
           : true
       )
@@ -70,7 +71,6 @@ autoRouter.post("/autosuggest/flights", (req, res) => {
             startIndex += searchTermLength;
           }
         };
-
         // Highlighting for 'name'
         addHighlightIndices(place.name);
         // Highlighting for 'hierarchy'

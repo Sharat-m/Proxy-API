@@ -2,7 +2,6 @@
 function validatelimit(limit) {
   const errors = [];
   // console.log("limit:", limit);
-
   if (limit != undefined) {
     limit = parseInt(limit);
     if (isNaN(limit)) {

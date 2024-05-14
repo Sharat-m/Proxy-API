@@ -6,8 +6,8 @@ const entityCodes = Object.values(iataData).map((place) => place.entityId);
 
 function validateQueryLegs(queryLegs) {
   let errors = [];
-   // Check if queryLegs is defined and is an array
-   if (!Array.isArray(queryLegs) || queryLegs.length === 0) {
+  // Check if queryLegs is defined and is an array
+  if (!Array.isArray(queryLegs) || queryLegs.length === 0) {
     errors.push("The query leg list must contain at least 1 leg");
     return { error: true, message: errors.join("\n") };
   }
@@ -97,8 +97,8 @@ function validateQueryLegs(queryLegs) {
     }
   }
   const message = errors.join("\n");
-  if(errors.length > 0) {
-    return { error: true, message: message}
+  if (errors.length > 0) {
+    return { error: true, message: message };
   }
   return { error: false }; // Indicating no error
 }

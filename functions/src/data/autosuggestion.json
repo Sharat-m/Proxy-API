@@ -1,5 +1,69 @@
 [
   {
+    "entityId": "128668563",
+    "iataCode": "IXE",
+    "parentId": "27542924",
+    "name": "Mangalore",
+    "countryId": "IN",
+    "countryName": "India",
+    "cityName": "Mangalore",
+    "location": "12.963889,74.893889",
+    "hierarchy": "Mangalore (IXE), Mangalore|Dakshina Kannada District|Karnataka|India",
+    "type": "PLACE_TYPE_AIRPORT"
+  },
+  {
+    "entityId": "27542924",
+    "iataCode": "IXE",
+    "parentId": "27542924",
+    "name": "Mangalore",
+    "countryId": "IN",
+    "countryName": "India",
+    "cityName": "Mangalore",
+    "location": "12.8666666776,74.8833333115",
+    "hierarchy": "Mangalore|Dakshina Kannada District|Karnataka|India",
+    "type": "PLACE_TYPE_CITY",
+    "highlighting": [],
+    "airportInformation": {
+      "iataCode": "CNN",
+      "name": "Kannur International",
+      "countryId": "IN",
+      "cityId": "CNNK",
+      "entityId": "192465714",
+      "parentId": "45294174",
+      "distance": {
+        "value": 127.76014,
+        "unitCode": "kilometre"
+      },
+      "location": "11.92,75.55"
+    }
+  },
+  {
+    "entityId": "27542924",
+    "iataCode": "IXE",
+    "parentId": "27542924",
+    "name": "Mangalore",
+    "countryId": "IN",
+    "countryName": "India",
+    "cityName": "Mangalore",
+    "location": "12.8666666776,74.8833333115",
+    "hierarchy": "Mangalore|Dakshina Kannada District|Karnataka|India",
+    "type": "PLACE_TYPE_CITY",
+    "highlighting": [],
+    "airportInformation": {
+      "iataCode": "RQY",
+      "name": "Shivamogga",
+      "countryId": "IN",
+      "cityId": "RQYA",
+      "entityId": "216766168",
+      "parentId": "216766167",
+      "distance": {
+        "value": 135.1173,
+        "unitCode": "kilometre"
+      },
+      "location": "13.858113708728455,75.60545387156084"
+    }
+  },
+  {
     "entityId": "27544008",
     "iataCode": "LON",
     "parentId": "27544008",
@@ -528,6 +592,58 @@
     "type": "PLACE_TYPE_AIRPORT"
   },
   {
+    "entityId": "27539471",
+    "iataCode": "BLR",
+    "parentId": "27539471",
+    "name": "Bengaluru",
+    "countryId": "IN",
+    "countryName": "India",
+    "cityName": "Bengaluru",
+    "location": "12.978785646285832,77.60355699175702",
+    "hierarchy": "Bengaluru|Bangalore Urban District|Karnataka|India",
+    "type": "PLACE_TYPE_CITY",
+    "highlighting": [],
+    "airportInformation": {
+      "iataCode": "MYQ",
+      "name": "Mysore",
+      "countryId": "IN",
+      "cityId": "IMYQ",
+      "entityId": "128668863",
+      "parentId": "27547336",
+      "distance": {
+        "value": 128.06627,
+        "unitCode": "kilometre"
+      },
+      "location": "12.3,76.65"
+    }
+  },
+  {
+    "entityId": "27539471",
+    "iataCode": "BLR",
+    "parentId": "27539471",
+    "name": "Bengaluru",
+    "countryId": "IN",
+    "countryName": "India",
+    "cityName": "Bengaluru",
+    "location": "12.978785646285832,77.60355699175702",
+    "hierarchy": "Bengaluru|Bangalore Urban District|Karnataka|India",
+    "type": "PLACE_TYPE_CITY",
+    "highlighting": [],
+    "airportInformation": {
+      "iataCode": "SXV",
+      "name": "Salem",
+      "countryId": "IN",
+      "cityId": "ISXV",
+      "entityId": "129057622",
+      "parentId": "27547095",
+      "distance": {
+        "value": 159.91713,
+        "unitCode": "kilometre"
+      },
+      "location": "11.65,78.166667"
+    }
+  },
+  {
     "entityId": "95673366",
     "iataCode": "AMD",
     "parentId": "27536554",
@@ -538,5 +654,30 @@
     "location": "23.066389,72.624167",
     "hierarchy": "Ahmedabad (AMD), Ahmedabad|Gandhinagar District|Gujarat|India",
     "type": "PLACE_TYPE_AIRPORT"
+  },
+  {
+    "entityId": "95673550",
+    "iataCode": "COK",
+    "parentId": "27539883",
+    "name": "Kochi",
+    "countryId": "IN",
+    "countryName": "India",
+    "cityName": "Kochi",
+    "location": "10.151944,76.401944",
+    "hierarchy": "Kochi (COK), Kochi|Ernakulam District|Kerala|India",
+    "type": "PLACE_TYPE_AIRPORT"
+  },
+  {
+    "entityId": "128667920",
+    "iataCode": "KCZ",
+    "parentId": "27543129",
+    "name": "Kochi",
+    "countryId": "JP",
+    "countryName": "Japan",
+    "cityName": "Kochi",
+    "location": "33.541111,133.676944",
+    "hierarchy": "Kochi (KCZ), Kochi|Kōchi-shi|Kōchi Prefecture|Japan",
+    "type": "PLACE_TYPE_AIRPORT",
+    "highlighting": []
   }
 ]

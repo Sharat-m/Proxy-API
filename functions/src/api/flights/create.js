@@ -9,6 +9,7 @@ const createRouter = express.Router();
 // FLIGHT CREATE REQUEST API
 createRouter.post("/flights/live/search/create", async (req, res) => {
   const { query } = req.body;
+
   // validating the Market, locale, currency, cabinclass and travellers,all the query
   const validationResults = validateRequest(query);
   if (validationResults.error) {
@@ -18,6 +19,7 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
       details: [],
     });
   }
+
 
   //******************Connecting firebase firestore databse***************************************
   const sessionToken = generateSessionToken();
@@ -37,11 +39,11 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
     });
 
     let adults = query.adults;
-    const childrenAges = query.childrenAges;
-    const totalChild = childrenAges.filter((age) => age > 1).length;
+    let childrenAges = query.childrenAges;
+    let totalChild = childrenAges.filter((age) => age > 1).length;
     let totalAdultChild = totalChild + adults; //checking the total adult and child
-    if (totalAdultChild >= 9) {
-      const jsonData = await fsReadFileToJSON("./src/data/error-create.json");
+    if (totalAdultChild >= 10) {
+      let jsonData = await fsReadFileToJSON("./src/data/error-create.json");
       return res.status(200).send({
         sessionToken: sessionToken,
         status: "RESULT_STATUS_COMPLETE",
@@ -51,7 +53,7 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
     }
     let tripType = query.queryLegs.length; //checking the request is oneway or twoway
     if (tripType === 1) {
-      const jsonData = await fsReadFileToJSON("./src/data/one-way-create.json");
+      let jsonData = await fsReadFileToJSON("./src/data/one-way-create.json");
       return res.status(200).send({
         sessionToken: sessionToken,
         status: "RESULT_STATUS_INCOMPLETE 1",
@@ -59,7 +61,7 @@ createRouter.post("/flights/live/search/create", async (req, res) => {
         content: jsonData,
       });
     } else if (tripType === 2) {
-      const jsonData = await fsReadFileToJSON("./src/data/two-way-create.json");
+      let jsonData = await fsReadFileToJSON("./src/data/two-way-create.json");
       return res.status(200).send({
         sessionToken: sessionToken,
         status: "RESULT_STATUS_INCOMPLETE 2",
