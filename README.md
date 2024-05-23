@@ -3,5 +3,10 @@ The project is FareFirst apis which is replica of skyscanner API and project is 
 - cmd
 Set the node version 18
 Run the Proxy-api locall and check it in the postman tool
-- To run locally - firebase serve
-- To deploy - firebase deploy 
+- Use project farefirst-debug 
+## firebase projects:list
+## firebase use farefirst-debug
+- To run locally
+## firebase serve
+- To deploy 
+## firebase deploy 
