@@ -1,0 +1,21 @@
+{
+    "status": "RESULT_STATUS_COMPLETE",
+    "market": {
+        "code": "IN",
+        "name": "India",
+        "currency": "INR"
+    },
+    "locale": {
+        "code": "en-GB",
+        "name": "English (United Kingdom)"
+    },
+    "currency": {
+        "code": "INR",
+        "symbol": "₹",
+        "thousandsSeparator": ",",
+        "decimalSeparator": ".",
+        "symbolOnLeft": true,
+        "spaceBetweenAmountAndSymbol": true,
+        "decimalDigits": 2
+    }
+}

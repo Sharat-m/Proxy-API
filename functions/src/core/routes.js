@@ -27,6 +27,9 @@ const geoRouter = require("../api/culture/geo");
 const localesRouter = require("../api/culture/locales");
 const currenciesRouter = require("../api/culture/currencies");
 const marketsRouter = require("../api/culture/markets");
+const ipRouter = require ("../api/ip/ip-get");
+const ipResultRouter = require("../api/ip/ip-result");
+
 //Flights Paths
 const createRouter = require("../api/flights/create");
 const pollRouter = require("../api/flights/poll");
@@ -38,6 +41,8 @@ router.use("/api", geoRouter);
 router.use("/api/culture", localesRouter);
 router.use("/api/culture", currenciesRouter);
 router.use("/api/culture", marketsRouter);
+router.use("/api", ipRouter);
+router.use("/api", ipResultRouter);
 //Flights Paths
 router.use("/api", createRouter);
 router.use("/api", pollRouter);
