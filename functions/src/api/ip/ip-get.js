@@ -4,10 +4,10 @@ const axios = require('axios'); //to make HTTP request
 
 const ipRouter = express.Router();
 
-ipRouter.get('/get-ip', async (req, res) => {
+ipRouter.get("/get-ip", async (req, res) => {
     try {
-        const response = await axios.get('https://api.ipify.org/?format=json');
-        // console.log(response.data);
+        const response = await axios.get(`http://api.ipify.org/?format=json`);
+        // console.log("response:", response.data);
         res.json(response.data);
     } catch (error) {
         console.log(error);
