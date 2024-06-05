@@ -18,4 +18,4 @@ const { onRequest } = require("firebase-functions/v2/https");
 
 // Export the app to Firebase Cloud Functions
 
-exports.app = onRequest(app);
+exports.skyScannerProxy = onRequest(app);
