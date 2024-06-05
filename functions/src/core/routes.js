@@ -1,7 +1,7 @@
 const express = require("express");
 // Use router in the Express app
 const router = express.Router();
-module.exports = router;
+
 //################################testing paths############################################################################################################################
 const getRouter = require("../api/testing/get");
 const postRouter = require("../api/testing/create");
@@ -47,3 +47,5 @@ router.use("/api", ipResultRouter);
 router.use("/api", createRouter);
 router.use("/api", pollRouter);
 router.use("/", autoRouter);
+
+module.exports = router;
